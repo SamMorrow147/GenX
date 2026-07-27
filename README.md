@@ -26,17 +26,16 @@ npm install
 npx playwright install chromium
 npm run all          # capture screenshots + build index.html
 npm run capture      # screenshots only (resumes / retries missing)
-npm run build        # regenerate index.html from data/pages.json
+npm run build:html   # regenerate index.html from data/pages.json
 ```
 
 ## Deploy on Vercel
 
-This is a static site — no build step required for deploy.
+This is a static site. `vercel.json` sets Framework to none, skips install/build, and serves from the repo root (`.`).
 
-1. Import the folder/repo in [Vercel](https://vercel.com/new)
-2. Framework Preset: **Other**
-3. Leave Build Command empty; Output Directory blank (root)
-4. Deploy
+1. Import [SamMorrow147/GenX](https://github.com/SamMorrow147/GenX) in [Vercel](https://vercel.com/new)
+2. Confirm Output Directory is `.` (not `public`)
+3. Deploy
 
 Or from the CLI:
 

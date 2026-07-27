@@ -5,7 +5,7 @@
   "description": "Visual sitemap of genxdirect.com for Vercel",
   "scripts": {
     "capture": "node scripts/capture.mjs",
-    "build": "node scripts/build.mjs",
+    "build:html": "node scripts/build.mjs",
     "all": "node scripts/capture.mjs && node scripts/build.mjs"
   },
   "devDependencies": {
