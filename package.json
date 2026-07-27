@@ -1,0 +1,14 @@
+{
+  "name": "genxdirect-visual-sitemap",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Visual sitemap of genxdirect.com for Vercel",
+  "scripts": {
+    "capture": "node scripts/capture.mjs",
+    "build": "node scripts/build.mjs",
+    "all": "node scripts/capture.mjs && node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.54.1"
+  }
+}

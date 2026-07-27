@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visual Sitemap — GenXDirect</title>
+<style>
+  :root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --ink: #1a2233;
+    --muted: #6b7688;
+    --line: #c3ccd9;
+    --accent: #e85d04;
+    --accent-soft: #fff0e6;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    padding-bottom: 80px;
+  }
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 28px 40px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .header-inner {
+    max-width: 1800px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .title-block h1 { font-size: 22px; font-weight: 700; }
+  .title-block a {
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .title-block a:hover { text-decoration: underline; }
+  .title-block .meta { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .stats {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--accent-soft);
+    border-radius: var(--radius);
+    padding: 10px 18px;
+    text-align: center;
+    min-width: 96px;
+  }
+  .stat .num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .stat .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+  .tree-wrap {
+    overflow-x: auto;
+    padding: 48px 40px 20px;
+  }
+  .tree {
+    min-width: 2200px;
+    max-width: none;
+    margin: 0 auto;
+    width: max-content;
+  }
+  .root-row { display: flex; justify-content: center; }
+  .stem {
+    width: 2px;
+    height: 28px;
+    background: var(--line);
+    margin: 0 auto;
+  }
+  ul.branches {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    align-items: flex-start;
+  }
+  ul.branches > li {
+    position: relative;
+    padding: 28px 14px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  ul.branches > li::before,
+  ul.branches > li::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 2px;
+    width: 50%;
+    background: var(--line);
+  }
+  ul.branches > li::before { left: 0; }
+  ul.branches > li::after  { right: 0; }
+  ul.branches > li:first-child::before { background: none; }
+  ul.branches > li:last-child::after   { background: none; }
+  ul.branches > li > .drop {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 28px;
+    background: var(--line);
+    transform: translateX(-50%);
+  }
+  .stack {
+    margin-top: 14px;
+    padding-left: 22px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .stack::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: -14px;
+    bottom: 84px;
+    width: 2px;
+    background: var(--line);
+  }
+  .stack > .node { position: relative; }
+  .stack > .node::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    width: 14px;
+    height: 2px;
+    background: var(--line);
+  }
+  .stack > .group-label { position: relative; }
+  .group-label {
+    position: relative;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--muted);
+    padding: 6px 0 0 2px;
+  }
+  .node {
+    width: 224px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+  .node:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(26, 34, 51, 0.14);
+  }
+  .node.root-node { width: 260px; border-color: var(--accent); border-width: 2px; }
+  .node.missing { opacity: 0.5; min-height: 80px; }
+  .thumb {
+    display: block;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    background: #e8ebf0;
+    border-bottom: 1px solid var(--line);
+  }
+  .root-node .thumb { height: 175px; }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    display: block;
+  }
+  .node-info { padding: 10px 12px 12px; }
+  .node-title {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.3;
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .node-title a { color: var(--ink); text-decoration: none; }
+  .node-title a:hover { color: var(--accent); }
+  .badge {
+    flex-shrink: 0;
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 999px;
+    padding: 2px 8px;
+  }
+  .node-path {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10.5px;
+    color: var(--muted);
+    margin-top: 4px;
+    word-break: break-all;
+  }
+  .node-note { font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .notes {
+    max-width: 1800px;
+    margin: 36px auto 0;
+    padding: 0 40px;
+  }
+  .notes h2 { font-size: 15px; margin-bottom: 10px; }
+  .notes ul { list-style: none; }
+  .notes li {
+    font-size: 13px;
+    color: var(--muted);
+    padding: 4px 0 4px 18px;
+    position: relative;
+  }
+  .notes li::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 11px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="title-block">
+      <h1>Visual Sitemap</h1>
+      <a href="https://www.genxdirect.com/" target="_blank" rel="noopener">genxdirect.com</a>
+      <div class="meta">BigCommerce &middot; crawled &amp; captured Jul 27, 2026 &middot; click a thumbnail for the full screenshot, a title for the live page</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="num">126</div><div class="lbl">Total URLs</div></div>
+      <div class="stat"><div class="num">43</div><div class="lbl">Categories</div></div>
+      <div class="stat"><div class="num">48</div><div class="lbl">Products</div></div>
+      <div class="stat"><div class="num">19</div><div class="lbl">Blog posts</div></div>
+      <div class="stat"><div class="num">4</div><div class="lbl">Levels deep</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="tree-wrap">
+  <div class="tree">
+    <div class="root-row">
+      
+      <div class="node root-node">
+        <a class="thumb" href="screenshots/home.png" target="_blank" rel="noopener"><img src="screenshots/home.png" alt="Home" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/" target="_blank" rel="noopener">Home</a><span class="badge">ROOT</span></div>
+          <div class="node-path">/</div>
+          <div class="node-note">Hero carousel, most popular products, brands</div>
+        </div>
+      </div>
+    </div>
+    <div class="stem"></div>
+    <ul class="branches">
+      <li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands.png" alt="Shop" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/" target="_blank" rel="noopener">Shop</a><span class="badge">7</span></div>
+          <div class="node-path">/generator-brands/</div>
+          <div class="node-note">Generator Brands hub — Shop nav target</div>
+        </div>
+      </div>
+        <div class="stack">
+          
+          
+          <div class="group-label">Briggs &amp; Stratton</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/briggs-stratton.png" target="_blank" rel="noopener"><img src="screenshots/briggs-stratton.png" alt="Briggs &amp; Stratton" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/briggs-stratton/" target="_blank" rel="noopener">Briggs &amp; Stratton</a></div>
+          <div class="node-path">/briggs-stratton/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/p2200-powersmart-series-inverter-generator.png" target="_blank" rel="noopener"><img src="screenshots/p2200-powersmart-series-inverter-generator.png" alt="P2200 PowerSmart Series" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/p2200-powersmart-series-inverter-generator/" target="_blank" rel="noopener">P2200 PowerSmart Series</a></div>
+          <div class="node-path">/p2200-powersmart-series-inverter-generator/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · P2200 PowerSmart Series</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-briggs-stratton--bergs-1-extended-run-fuel-system-tank-included-part-bs-p2200-s.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-briggs-stratton--bergs-1-extended-run-fuel-system-tank-included-part-bs-p2200-s.png" alt="IPI BERGS 1 Extended Run Fuel System Tank Included Part Bs p2200 S" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-1-extended-run-fuel-system-tank-included-part-bs-p2200-s/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System Tank Included Part Bs p2200 S</a></div>
+          <div class="node-path">/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-1-extended-run-fuel-system-tank-included-part-bs-p2200-s/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-briggs-stratton--1-extended-run-fuel-system-tank-not-included-part-bs-p2200-cs.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-briggs-stratton--1-extended-run-fuel-system-tank-not-included-part-bs-p2200-cs.png" alt="IPI BERGS 1 Extended Run Fuel System Tank Not Included Part Bs p2200 Cs" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-bs-p2200-cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System Tank Not Included Part Bs p2200 Cs</a></div>
+          <div class="node-path">/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-bs-p2200-cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-briggs-stratton--bergs-2-extended-run-fuel-system-tank-included-part-bs-p2200-d.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-briggs-stratton--bergs-2-extended-run-fuel-system-tank-included-part-bs-p2200-d.png" alt="IPI BERGS 2 Extended Run Fuel System Tank Included Part Bs p2200 D" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-2-extended-run-fuel-system-tank-included-part-bs-p2200-d/" target="_blank" rel="noopener">IPI BERGS 2 Extended Run Fuel System Tank Included Part Bs p2200 D</a></div>
+          <div class="node-path">/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-2-extended-run-fuel-system-tank-included-part-bs-p2200-d/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-briggs-stratton--2-extended-run-fuel-system-tank-not-included-part-bs-p2200-cd.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-briggs-stratton--2-extended-run-fuel-system-tank-not-included-part-bs-p2200-cd.png" alt="IPI BERGS 2 Extended Run Fuel System Tank Not Included Part Bs p2200 Cd" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-2-extended-run-fuel-system-tank-not-included-part-bs-p2200-cd/" target="_blank" rel="noopener">IPI BERGS 2 Extended Run Fuel System Tank Not Included Part Bs p2200 Cd</a></div>
+          <div class="node-path">/generator-brands/briggs-stratton/p2200-powersmart-series-inverter-generator/ipi-bergs-2-extended-run-fuel-system-tank-not-included-part-bs-p2200-cd/</div>
+          
+        </div>
+      </div>
+          
+    
+
+          <div class="group-label">Generac</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/generac.png" target="_blank" rel="noopener"><img src="screenshots/generac.png" alt="Generac" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generac/" target="_blank" rel="noopener">Generac</a></div>
+          <div class="node-path">/generac/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/generac-iq2000.png" target="_blank" rel="noopener"><img src="screenshots/generac-iq2000.png" alt="Generac IQ2000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generac-iq2000/" target="_blank" rel="noopener">Generac IQ2000</a></div>
+          <div class="node-path">/generac-iq2000/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · Generac IQ2000</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-generac-generac--bergs-1-extended-run-fuel-system-tank-included-part-gnc-iq2000-s.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-generac-generac--bergs-1-extended-run-fuel-system-tank-included-part-gnc-iq2000-s.png" alt="IPI BERGS 1 Extended Run Fuel System Tank Included Part Gnc iq2000 S" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/generac/generac-iq2000/ipi-bergs-1-extended-run-fuel-system-tank-included-part-gnc-iq2000-s/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System Tank Included Part Gnc iq2000 S</a></div>
+          <div class="node-path">/generator-brands/generac/generac-iq2000/ipi-bergs-1-extended-run-fuel-system-tank-included-part-gnc-iq2000-s/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-generac-generac--1-extended-run-fuel-system-tank-not-included-part-gnc-iq2000-cs.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-generac-generac--1-extended-run-fuel-system-tank-not-included-part-gnc-iq2000-cs.png" alt="IPI BERGS 1 Extended Run Fuel System Tank Not Included Part Gnc iq200…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/generac/generac-iq2000/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-gnc-iq2000-cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System Tank Not Included Part Gnc iq200…</a></div>
+          <div class="node-path">/generator-brands/generac/generac-iq2000/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-gnc-iq2000-cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1.png" alt="IPI BERGS 1 Cap (replacment cap works with Generac IQ2000 Part # GIQ.…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1/" target="_blank" rel="noopener">IPI BERGS 1 Cap (replacment cap works with Generac IQ2000 Part # GIQ.…</a></div>
+          <div class="node-path">/accessories/ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1/</div>
+          
+        </div>
+      </div>
+          
+    
+
+          <div class="group-label">Predator</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/predator.png" target="_blank" rel="noopener"><img src="screenshots/predator.png" alt="Predator" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/predator/" target="_blank" rel="noopener">Predator</a></div>
+          <div class="node-path">/predator/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/predator-2000.png" target="_blank" rel="noopener"><img src="screenshots/predator-2000.png" alt="Predator 2000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/predator-2000/" target="_blank" rel="noopener">Predator 2000</a></div>
+          <div class="node-path">/predator-2000/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · Predator 2000</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-predator-predator--ipi-bergs-1-extended-run-fuel-system-tank-included-part-pred1-2000is.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-predator-predator--ipi-bergs-1-extended-run-fuel-system-tank-included-part-pred1-2000is.png" alt="IPI BERGS 1 Extended Run Fuel System Tank Included Part pred1 2000is" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/predator/predator-2000/ipi-bergs-1-extended-run-fuel-system-tank-included-part-pred1-2000is/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System Tank Included Part pred1 2000is</a></div>
+          <div class="node-path">/generator-brands/predator/predator-2000/ipi-bergs-1-extended-run-fuel-system-tank-included-part-pred1-2000is/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-predator-predator--bergs-1-extended-run-fuel-system-tank-not-included-part-pred1-2cs.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-predator-predator--bergs-1-extended-run-fuel-system-tank-not-included-part-pred1-2cs.png" alt="IPI BERGS 1 Extended Run Fuel System Tank Not Included Part pred1 2cs" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/predator/predator-2000/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-pred1-2cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System Tank Not Included Part pred1 2cs</a></div>
+          <div class="node-path">/generator-brands/predator/predator-2000/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-pred1-2cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-1-cap-works-with-predator-2000-part-1007-1.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-1-cap-works-with-predator-2000-part-1007-1.png" alt="IPI BERGS 1 CAP (Works With Predator 2000)Part# 1007-1" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-1-cap-works-with-predator-2000-part-1007-1/" target="_blank" rel="noopener">IPI BERGS 1 CAP (Works With Predator 2000)Part# 1007-1</a></div>
+          <div class="node-path">/accessories/ipi-bergs-1-cap-works-with-predator-2000-part-1007-1/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/predator-3500.png" target="_blank" rel="noopener"><img src="screenshots/predator-3500.png" alt="Predator 3500" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/predator-3500/" target="_blank" rel="noopener">Predator 3500</a></div>
+          <div class="node-path">/predator-3500/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · Predator 3500</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-predator-predator--ipi-bergs-i-extended-run-fuel-system-tank-included-part-pred1-3500s.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-predator-predator--ipi-bergs-i-extended-run-fuel-system-tank-included-part-pred1-3500s.png" alt="IPI BERGS I Extended Run Fuel System Tank Included Part pred1 3500s" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/predator/predator-3500/ipi-bergs-i-extended-run-fuel-system-tank-included-part-pred1-3500s/" target="_blank" rel="noopener">IPI BERGS I Extended Run Fuel System Tank Included Part pred1 3500s</a></div>
+          <div class="node-path">/generator-brands/predator/predator-3500/ipi-bergs-i-extended-run-fuel-system-tank-included-part-pred1-3500s/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-predator-predator-3500-predator-3500-replacement-cap.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-predator-predator-3500-predator-3500-replacement-cap.png" alt="Predator 3500 Replacement Cap" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/predator/predator-3500/predator-3500-replacement-cap/" target="_blank" rel="noopener">Predator 3500 Replacement Cap</a></div>
+          <div class="node-path">/generator-brands/predator/predator-3500/predator-3500-replacement-cap/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-predator-ipi-bergs-extended-run-fuel-system-tank-not-included.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-predator-ipi-bergs-extended-run-fuel-system-tank-not-included.png" alt="IPI BERGS Extended Run Fuel System Tank Not Included" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/predator/ipi-bergs-extended-run-fuel-system-tank-not-included/" target="_blank" rel="noopener">IPI BERGS Extended Run Fuel System Tank Not Included</a></div>
+          <div class="node-path">/generator-brands/predator/ipi-bergs-extended-run-fuel-system-tank-not-included/</div>
+          
+        </div>
+      </div>
+    
+
+          <div class="group-label">Honda</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/honda.png" target="_blank" rel="noopener"><img src="screenshots/honda.png" alt="Honda" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda/" target="_blank" rel="noopener">Honda</a></div>
+          <div class="node-path">/honda/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu1000.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu1000.png" alt="Honda EU1000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu1000/" target="_blank" rel="noopener">Honda EU1000</a></div>
+          <div class="node-path">/honda-eu1000/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu1000-1.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu1000-1.png" alt="Honda EU1000 (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu1000-1/" target="_blank" rel="noopener">Honda EU1000 (alt)</a></div>
+          <div class="node-path">/honda-eu1000-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eb2800i.png" target="_blank" rel="noopener"><img src="screenshots/honda-eb2800i.png" alt="Honda EB2800i" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eb2800i/" target="_blank" rel="noopener">Honda EB2800i</a></div>
+          <div class="node-path">/honda-eb2800i/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · Honda EB2800i</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-honda-honda-eb2800i-honda-eb2800-replcament-cap-cap-only.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-honda-honda-eb2800i-honda-eb2800-replcament-cap-cap-only.png" alt="Honda eb2800 Replcament Cap Cap Only" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/honda/honda-eb2800i/honda-eb2800-replcament-cap-cap-only/" target="_blank" rel="noopener">Honda eb2800 Replcament Cap Cap Only</a></div>
+          <div class="node-path">/generator-brands/honda/honda-eb2800i/honda-eb2800-replcament-cap-cap-only/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-honda-honda--ipi-bergs-extended-run-fuel-system-for-honda-eb2800i-tank-not-included.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-honda-honda--ipi-bergs-extended-run-fuel-system-for-honda-eb2800i-tank-not-included.png" alt="IPI BERGS Extended Run Fuel System For Honda eb2800i Tank Not Included" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/honda/honda-eb2800i/ipi-bergs-extended-run-fuel-system-for-honda-eb2800i-tank-not-included/" target="_blank" rel="noopener">IPI BERGS Extended Run Fuel System For Honda eb2800i Tank Not Included</a></div>
+          <div class="node-path">/generator-brands/honda/honda-eb2800i/ipi-bergs-extended-run-fuel-system-for-honda-eb2800i-tank-not-included/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-honda-honda--ipi-bergs-i-extended-run-fuel-system-for-honda-eb2800i-tank-included.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-honda-honda--ipi-bergs-i-extended-run-fuel-system-for-honda-eb2800i-tank-included.png" alt="IPI BERGS I Extended Run Fuel System For Honda eb2800i Tank Included" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/honda/honda-eb2800i/ipi-bergs-i-extended-run-fuel-system-for-honda-eb2800i-tank-included/" target="_blank" rel="noopener">IPI BERGS I Extended Run Fuel System For Honda eb2800i Tank Included</a></div>
+          <div class="node-path">/generator-brands/honda/honda-eb2800i/ipi-bergs-i-extended-run-fuel-system-for-honda-eb2800i-tank-included/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu2200.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu2200.png" alt="Honda EU2200i" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu2200/" target="_blank" rel="noopener">Honda EU2200i</a></div>
+          <div class="node-path">/honda-eu2200/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu3000.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu3000.png" alt="Honda EU3000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu3000/" target="_blank" rel="noopener">Honda EU3000</a></div>
+          <div class="node-path">/honda-eu3000/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · Honda EU3000</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-honda-honda--ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-7000is.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-honda-honda--ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-7000is.png" alt="On Backorder Until 1 30 25 IPI BERGS 1 Extended Run Fuel System Tank …" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/honda/honda-eu3000/on-backorder-until-1-30-25-ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-7000is/" target="_blank" rel="noopener">On Backorder Until 1 30 25 IPI BERGS 1 Extended Run Fuel System Tank …</a></div>
+          <div class="node-path">/generator-brands/honda/honda-eu3000/on-backorder-until-1-30-25-ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-7000is/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-honda-honda--bergs-1-extended-run-fuel-system-tank-not-included-part-hnd1-7cs.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-honda-honda--bergs-1-extended-run-fuel-system-tank-not-included-part-hnd1-7cs.png" alt="On Backorder Until 1 30 25 IPI BERGS 1 Extended Run Fuel System Tank …" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/honda/honda-eu3000/on-backorder-until-1-30-25-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-hnd1-7cs/" target="_blank" rel="noopener">On Backorder Until 1 30 25 IPI BERGS 1 Extended Run Fuel System Tank …</a></div>
+          <div class="node-path">/generator-brands/honda/honda-eu3000/on-backorder-until-1-30-25-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-hnd1-7cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu3000-1.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu3000-1.png" alt="Honda EU3000 (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu3000-1/" target="_blank" rel="noopener">Honda EU3000 (alt)</a></div>
+          <div class="node-path">/honda-eu3000-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu3200i.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu3200i.png" alt="Honda EU3200i" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu3200i/" target="_blank" rel="noopener">Honda EU3200i</a></div>
+          <div class="node-path">/honda-eu3200i/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · Honda EU3200i</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-honda-honda--honda-cap-kit-3200i-ck-includes-gasket-vent-clip-and-instruction-card.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-honda-honda--honda-cap-kit-3200i-ck-includes-gasket-vent-clip-and-instruction-card.png" alt="Honda Cap Kit 3200i Ck Includes Gasket Vent Clip And Instruction Card" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/honda/honda-eu3200i/honda-cap-kit-3200i-ck-includes-gasket-vent-clip-and-instruction-card/" target="_blank" rel="noopener">Honda Cap Kit 3200i Ck Includes Gasket Vent Clip And Instruction Card</a></div>
+          <div class="node-path">/generator-brands/honda/honda-eu3200i/honda-cap-kit-3200i-ck-includes-gasket-vent-clip-and-instruction-card/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu2000.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu2000.png" alt="Honda EU2000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu2000/" target="_blank" rel="noopener">Honda EU2000</a></div>
+          <div class="node-path">/honda-eu2000/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu6500.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu6500.png" alt="Honda EU6500" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu6500/" target="_blank" rel="noopener">Honda EU6500</a></div>
+          <div class="node-path">/honda-eu6500/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/em6500sx.png" target="_blank" rel="noopener"><img src="screenshots/em6500sx.png" alt="Honda EM6500SX" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/em6500sx/" target="_blank" rel="noopener">Honda EM6500SX</a></div>
+          <div class="node-path">/em6500sx/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/honda-eu7000.png" target="_blank" rel="noopener"><img src="screenshots/honda-eu7000.png" alt="Honda EU7000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/honda-eu7000/" target="_blank" rel="noopener">Honda EU7000</a></div>
+          <div class="node-path">/honda-eu7000/</div>
+          
+        </div>
+      </div>
+          
+    
+
+          <div class="group-label">Kipor</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor.png" target="_blank" rel="noopener"><img src="screenshots/kipor.png" alt="Kipor" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor/" target="_blank" rel="noopener">Kipor</a></div>
+          <div class="node-path">/kipor/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-1000.png" target="_blank" rel="noopener"><img src="screenshots/kipor-1000.png" alt="Kipor 1000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-1000/" target="_blank" rel="noopener">Kipor 1000</a></div>
+          <div class="node-path">/kipor-1000/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-1000-1.png" target="_blank" rel="noopener"><img src="screenshots/kipor-1000-1.png" alt="Kipor 1000 (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-1000-1/" target="_blank" rel="noopener">Kipor 1000 (alt)</a></div>
+          <div class="node-path">/kipor-1000-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-2000.png" target="_blank" rel="noopener"><img src="screenshots/kipor-2000.png" alt="Kipor 2000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-2000/" target="_blank" rel="noopener">Kipor 2000</a></div>
+          <div class="node-path">/kipor-2000/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-2000-1.png" target="_blank" rel="noopener"><img src="screenshots/kipor-2000-1.png" alt="Kipor 2000 (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-2000-1/" target="_blank" rel="noopener">Kipor 2000 (alt)</a></div>
+          <div class="node-path">/kipor-2000-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-2600.png" target="_blank" rel="noopener"><img src="screenshots/kipor-2600.png" alt="Kipor 2600" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-2600/" target="_blank" rel="noopener">Kipor 2600</a></div>
+          <div class="node-path">/kipor-2600/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-2600-1.png" target="_blank" rel="noopener"><img src="screenshots/kipor-2600-1.png" alt="Kipor 2600 (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-2600-1/" target="_blank" rel="noopener">Kipor 2600 (alt)</a></div>
+          <div class="node-path">/kipor-2600-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-770.png" target="_blank" rel="noopener"><img src="screenshots/kipor-770.png" alt="Kipor 770" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-770/" target="_blank" rel="noopener">Kipor 770</a></div>
+          <div class="node-path">/kipor-770/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/kipor-770-1.png" target="_blank" rel="noopener"><img src="screenshots/kipor-770-1.png" alt="Kipor 770 (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/kipor-770-1/" target="_blank" rel="noopener">Kipor 770 (alt)</a></div>
+          <div class="node-path">/kipor-770-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+          
+    
+
+          <div class="group-label">Ryobi</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/ryobi.png" target="_blank" rel="noopener"><img src="screenshots/ryobi.png" alt="Ryobi" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/ryobi/" target="_blank" rel="noopener">Ryobi</a></div>
+          <div class="node-path">/ryobi/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/ryobi-2200.png" target="_blank" rel="noopener"><img src="screenshots/ryobi-2200.png" alt="Ryobi 2200" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/ryobi-2200/" target="_blank" rel="noopener">Ryobi 2200</a></div>
+          <div class="node-path">/ryobi-2200/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/new-category.png" target="_blank" rel="noopener"><img src="screenshots/new-category.png" alt="Ryobi 2300 Bluetooth" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/new-category/" target="_blank" rel="noopener">Ryobi 2300 Bluetooth</a></div>
+          <div class="node-path">/new-category/</div>
+          <div class="node-note">Slug is still /new-category/</div>
+        </div>
+      </div>
+          
+    
+
+          <div class="group-label">Yamaha</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/yamaha.png" target="_blank" rel="noopener"><img src="screenshots/yamaha.png" alt="Yamaha" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/yamaha/" target="_blank" rel="noopener">Yamaha</a></div>
+          <div class="node-path">/yamaha/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/ef2200is.png" target="_blank" rel="noopener"><img src="screenshots/ef2200is.png" alt="EF2200iS" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/ef2200is/" target="_blank" rel="noopener">EF2200iS</a></div>
+          <div class="node-path">/ef2200is/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Products · EF2200iS</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-yamaha-ef2200is-yamaha-ef2200is-dual-system.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-yamaha-ef2200is-yamaha-ef2200is-dual-system.png" alt="Yamaha ef2200is Dual System" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/yamaha/ef2200is/yamaha-ef2200is-dual-system/" target="_blank" rel="noopener">Yamaha ef2200is Dual System</a></div>
+          <div class="node-path">/generator-brands/yamaha/ef2200is/yamaha-ef2200is-dual-system/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/yamaha-1000.png" target="_blank" rel="noopener"><img src="screenshots/yamaha-1000.png" alt="Yamaha 1000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/yamaha-1000/" target="_blank" rel="noopener">Yamaha 1000</a></div>
+          <div class="node-path">/yamaha-1000/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/yamaha-2000.png" target="_blank" rel="noopener"><img src="screenshots/yamaha-2000.png" alt="Yamaha 2000" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/yamaha-2000/" target="_blank" rel="noopener">Yamaha 2000</a></div>
+          <div class="node-path">/yamaha-2000/</div>
+          
+        </div>
+      </div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-yamaha-ipi--run-generator-system-b-e-r-g-s-clam-single-yamaha-ef1000is.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-yamaha-ipi--run-generator-system-b-e-r-g-s-clam-single-yamaha-ef1000is.png" alt="IPI Breeze Extended Run Generator System B E R G S Clam Single Yamaha…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/yamaha/ipi-breeze-extended-run-generator-system-b-e-r-g-s-clam-single-yamaha-ef1000is/" target="_blank" rel="noopener">IPI Breeze Extended Run Generator System B E R G S Clam Single Yamaha…</a></div>
+          <div class="node-path">/generator-brands/yamaha/ipi-breeze-extended-run-generator-system-b-e-r-g-s-clam-single-yamaha-ef1000is/</div>
+          
+        </div>
+      </div>
+    
+<div class="group-label">B.E.R.G.S. Systems</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g--system-with-6-gallon-fuel-tank-ipi-industries-berg-system-ymh1-2000is.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g--system-with-6-gallon-fuel-tank-ipi-industries-berg-system-ymh1-2000is.png" alt="Extended Run Generator Fuel System with 6 Gallon Fuel Tank - IPI Indu…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/extended-run-generator-fuel-system-with-6-gallon-fuel-tank-ipi-industries-berg-system-ymh1-2000is/" target="_blank" rel="noopener">Extended Run Generator Fuel System with 6 Gallon Fuel Tank - IPI Indu…</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/extended-run-generator-fuel-system-with-6-gallon-fuel-tank-ipi-industries-berg-system-ymh1-2000is/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-2000is.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-2000is.png" alt="IPI BERGS 1 Extended Run Fuel System (Tank included) Part # HND1.2000IS" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-2000is/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (Tank included) Part # HND1.2000IS</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-2000is/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ghnd1-2cs.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ghnd1-2cs.png" alt="IPI BERGS 1 Extended Run Fuel System (Tank not included) Part # GHND1…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ghnd1-2cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (Tank not included) Part # GHND1…</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ghnd1-2cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ymh1-2cs.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ymh1-2cs.png" alt="IPI BERGS 1 Extended Run Fuel System (Tank not included) Part # YMH1.2CS" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ymh1-2cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (Tank not included) Part # YMH1.2CS</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ymh1-2cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-gnc-2000-s.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-gnc-2000-s.png" alt="IPI BERGS 1 Extended Run Fuel System (with tank) Part # GNC.2000.S" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-with-tank-part-gnc-2000-s/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (with tank) Part # GNC.2000.S</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-with-tank-part-gnc-2000-s/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-ryb1-2200s.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-ryb1-2200s.png" alt="IPI BERGS 1 Extended Run Fuel System (with tank) Part # RYB1.2200S" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-with-tank-part-ryb1-2200s/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (with tank) Part # RYB1.2200S</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-with-tank-part-ryb1-2200s/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gen1-2cs.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gen1-2cs.png" alt="IPI BERGS 1 Extended Run Fuel System (without tank) Part # GEN1.2CS" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-without-tank-part-gen1-2cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (without tank) Part # GEN1.2CS</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-without-tank-part-gen1-2cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gryb1-2cs.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gryb1-2cs.png" alt="IPI BERGS 1 Extended Run Fuel System (without tank) Part # GRYB1.2CS" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-without-tank-part-gryb1-2cs/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (without tank) Part # GRYB1.2CS</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-1-extended-run-fuel-system-without-tank-part-gryb1-2cs/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g--dual-generator-extended-run-fuel-system-part-tank-not-included-ghnd1-2cd.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g--dual-generator-extended-run-fuel-system-part-tank-not-included-ghnd1-2cd.png" alt="IPI BERGS 2 Dual Generator Extended Run Fuel System Part (Tank not in…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-2-dual-generator-extended-run-fuel-system-part-tank-not-included-ghnd1-2cd/" target="_blank" rel="noopener">IPI BERGS 2 Dual Generator Extended Run Fuel System Part (Tank not in…</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-2-dual-generator-extended-run-fuel-system-part-tank-not-included-ghnd1-2cd/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-dual-generator-extended-run-fuel-system-tank-included.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-dual-generator-extended-run-fuel-system-tank-included.png" alt="IPI BERGS 2 Dual Generator Extended Run Fuel System (Tank included)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-2-dual-generator-extended-run-fuel-system-tank-included/" target="_blank" rel="noopener">IPI BERGS 2 Dual Generator Extended Run Fuel System (Tank included)</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-2-dual-generator-extended-run-fuel-system-tank-included/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-extended-run-fuel-system-for-dual-generators-with-tank-part-ryb1-2200d.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-extended-run-fuel-system-for-dual-generators-with-tank-part-ryb1-2200d.png" alt="IPI BERGS 2 Extended Run Fuel System for dual generators (with tank) …" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-2-extended-run-fuel-system-for-dual-generators-with-tank-part-ryb1-2200d/" target="_blank" rel="noopener">IPI BERGS 2 Extended Run Fuel System for dual generators (with tank) …</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-2-extended-run-fuel-system-for-dual-generators-with-tank-part-ryb1-2200d/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g--extend-run-fuel-system-for-dual-generators-without-tank-part-gryb1-2cd.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g--extend-run-fuel-system-for-dual-generators-without-tank-part-gryb1-2cd.png" alt="IPI BERGS II Extend Run Fuel System for dual generators (without tank…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/bergs-i/ipi-bergs-ii-extend-run-fuel-system-for-dual-generators-without-tank-part-gryb1-2cd/" target="_blank" rel="noopener">IPI BERGS II Extend Run Fuel System for dual generators (without tank…</a></div>
+          <div class="node-path">/b-e-r-g-s/bergs-i/ipi-bergs-ii-extend-run-fuel-system-for-dual-generators-without-tank-part-gryb1-2cd/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-included-out-of-stock-until-june-23-2025.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-included-out-of-stock-until-june-23-2025.png" alt="IPI BERGS 1 Extended Run Fuel System (Tank included)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/ipi-bergs-1-extended-run-fuel-system-tank-included-out-of-stock-until-june-23-2025/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (Tank included)</a></div>
+          <div class="node-path">/b-e-r-g-s/ipi-bergs-1-extended-run-fuel-system-tank-included-out-of-stock-until-june-23-2025/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-not-included-out-of-stock-until-june-23-2025.png" target="_blank" rel="noopener"><img src="screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-not-included-out-of-stock-until-june-23-2025.png" alt="IPI BERGS 1 Extended Run Fuel System (Tank Not Included)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/b-e-r-g-s/ipi-bergs-1-extended-run-fuel-system-tank-not-included-out-of-stock-until-june-23-2025/" target="_blank" rel="noopener">IPI BERGS 1 Extended Run Fuel System (Tank Not Included)</a></div>
+          <div class="node-path">/b-e-r-g-s/ipi-bergs-1-extended-run-fuel-system-tank-not-included-out-of-stock-until-june-23-2025/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Other categories</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/champion-3100-1.png" target="_blank" rel="noopener"><img src="screenshots/champion-3100-1.png" alt="Champion 3100" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/champion-3100-1/" target="_blank" rel="noopener">Champion 3100</a></div>
+          <div class="node-path">/champion-3100-1/</div>
+          <div class="node-note">In sitemap; Champion brand page 404s</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/duromax-xp2000i.png" target="_blank" rel="noopener"><img src="screenshots/duromax-xp2000i.png" alt="DuroMax XP2000i" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/duromax-xp2000i/" target="_blank" rel="noopener">DuroMax XP2000i</a></div>
+          <div class="node-path">/duromax-xp2000i/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/duromax-xp2000i-1.png" target="_blank" rel="noopener"><img src="screenshots/duromax-xp2000i-1.png" alt="DuroMax XP2000i (alt)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/duromax-xp2000i-1/" target="_blank" rel="noopener">DuroMax XP2000i (alt)</a></div>
+          <div class="node-path">/duromax-xp2000i-1/</div>
+          <div class="node-note">Duplicate category URL</div>
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/igen2200.png" target="_blank" rel="noopener"><img src="screenshots/igen2200.png" alt="iGen2200" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/igen2200/" target="_blank" rel="noopener">iGen2200</a></div>
+          <div class="node-path">/igen2200/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/powerhorse-2000-gravity-fed.png" target="_blank" rel="noopener"><img src="screenshots/powerhorse-2000-gravity-fed.png" alt="Powerhorse 2000 Gravity Fed" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/powerhorse-2000-gravity-fed/" target="_blank" rel="noopener">Powerhorse 2000 Gravity Fed</a></div>
+          <div class="node-path">/powerhorse-2000-gravity-fed/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/w2000i.png" target="_blank" rel="noopener"><img src="screenshots/w2000i.png" alt="Westinghouse W2000i" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/w2000i/" target="_blank" rel="noopener">Westinghouse W2000i</a></div>
+          <div class="node-path">/w2000i/</div>
+          
+        </div>
+      </div>
+<div class="group-label">Other products</div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/generator-brands-powerhorse-ipi--extended-run-generator-system-b-e-r-g-s-single-yamaha-ef1000is.png" target="_blank" rel="noopener"><img src="screenshots/generator-brands-powerhorse-ipi--extended-run-generator-system-b-e-r-g-s-single-yamaha-ef1000is.png" alt="IPI Breeze Extended Run Generator System B E R G S Single Yamaha ef10…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/generator-brands/powerhorse/ipi-breeze-extended-run-generator-system-b-e-r-g-s-single-yamaha-ef1000is/" target="_blank" rel="noopener">IPI Breeze Extended Run Generator System B E R G S Single Yamaha ef10…</a></div>
+          <div class="node-path">/generator-brands/powerhorse/ipi-breeze-extended-run-generator-system-b-e-r-g-s-single-yamaha-ef1000is/</div>
+          
+        </div>
+      </div>
+        </div></li>
+      <li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-3.png" target="_blank" rel="noopener"><img src="screenshots/accessories-3.png" alt="Accessories" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories-3/" target="_blank" rel="noopener">Accessories</a><span class="badge">14</span></div>
+          <div class="node-path">/accessories-3/</div>
+          <div class="node-note">Accessories category</div>
+        </div>
+      </div>
+        <div class="stack">
+          <div class="group-label">Products</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-6-gallon-marine-attwood-tank-part-8806lp2-1b.png" target="_blank" rel="noopener"><img src="screenshots/accessories-6-gallon-marine-attwood-tank-part-8806lp2-1b.png" alt="6 Gallon Marine Attwood Tank Part # 8806LP2-1B" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/6-gallon-marine-attwood-tank-part-8806lp2-1b/" target="_blank" rel="noopener">6 Gallon Marine Attwood Tank Part # 8806LP2-1B</a></div>
+          <div class="node-path">/accessories/6-gallon-marine-attwood-tank-part-8806lp2-1b/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-b-e-r-g-s-single-to-dual-conversion-kit-from-ipi-industries.png" target="_blank" rel="noopener"><img src="screenshots/accessories-b-e-r-g-s-single-to-dual-conversion-kit-from-ipi-industries.png" alt="B.E.R.G.S. Single to Dual Conversion Kit from IPI Industries" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/b-e-r-g-s-single-to-dual-conversion-kit-from-ipi-industries/" target="_blank" rel="noopener">B.E.R.G.S. Single to Dual Conversion Kit from IPI Industries</a></div>
+          <div class="node-path">/accessories/b-e-r-g-s-single-to-dual-conversion-kit-from-ipi-industries/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-bergs-i-and-ii-replacement-gasket-for-yamaha-set-ipi-73257ym.png" target="_blank" rel="noopener"><img src="screenshots/accessories-bergs-i-and-ii-replacement-gasket-for-yamaha-set-ipi-73257ym.png" alt="BERGS I and II Replacement Gasket for Yamaha Set,IPI-73257YM" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/bergs-i-and-ii-replacement-gasket-for-yamaha-set-ipi-73257ym/" target="_blank" rel="noopener">BERGS I and II Replacement Gasket for Yamaha Set,IPI-73257YM</a></div>
+          <div class="node-path">/accessories/bergs-i-and-ii-replacement-gasket-for-yamaha-set-ipi-73257ym/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-briggs-and-stratton-berg-1-cap-part-bs-p2200.png" target="_blank" rel="noopener"><img src="screenshots/accessories-briggs-and-stratton-berg-1-cap-part-bs-p2200.png" alt="Briggs and Stratton Berg 1 Cap Part# BS.P2200" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/briggs-and-stratton-berg-1-cap-part-bs-p2200/" target="_blank" rel="noopener">Briggs and Stratton Berg 1 Cap Part# BS.P2200</a></div>
+          <div class="node-path">/accessories/briggs-and-stratton-berg-1-cap-part-bs-p2200/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-complete-hose-assembly-for-ipi-industries-b-e-r-g-s.png" target="_blank" rel="noopener"><img src="screenshots/accessories-complete-hose-assembly-for-ipi-industries-b-e-r-g-s.png" alt="Complete Hose Assembly for IPI Industries B.E.R.G.S." loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/complete-hose-assembly-for-ipi-industries-b-e-r-g-s/" target="_blank" rel="noopener">Complete Hose Assembly for IPI Industries B.E.R.G.S.</a></div>
+          <div class="node-path">/accessories/complete-hose-assembly-for-ipi-industries-b-e-r-g-s/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-honda-gasket-replacement-set-5-pack-ipi-73257.png" target="_blank" rel="noopener"><img src="screenshots/accessories-honda-gasket-replacement-set-5-pack-ipi-73257.png" alt="Honda Gasket Replacement Set (5) Pack - IPI-73257" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/honda-gasket-replacement-set-5-pack-ipi-73257/" target="_blank" rel="noopener">Honda Gasket Replacement Set (5) Pack - IPI-73257</a></div>
+          <div class="node-path">/accessories/honda-gasket-replacement-set-5-pack-ipi-73257/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-1--cap-replacement-blue-cap-works-with-yamaha-powerhorse-westinghouse-part-1003-1.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-1--cap-replacement-blue-cap-works-with-yamaha-powerhorse-westinghouse-part-1003-1.png" alt="IPI BERGS 1 Cap (replacement blue cap works with Yamaha, PowerHorse, …" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-1-cap-replacement-blue-cap-works-with-yamaha-powerhorse-westinghouse-part-1003-1/" target="_blank" rel="noopener">IPI BERGS 1 Cap (replacement blue cap works with Yamaha, PowerHorse, …</a></div>
+          <div class="node-path">/accessories/ipi-bergs-1-cap-replacement-blue-cap-works-with-yamaha-powerhorse-westinghouse-part-1003-1/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1.png" alt="IPI BERGS 1 Cap (replacment cap works with Generac IQ2000 Part # GIQ.…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1/" target="_blank" rel="noopener">IPI BERGS 1 Cap (replacment cap works with Generac IQ2000 Part # GIQ.…</a></div>
+          <div class="node-path">/accessories/ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-1-cap-works-with-honda-2000-and-many-more-replacement-cap-only.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-1-cap-works-with-honda-2000-and-many-more-replacement-cap-only.png" alt="IPI BERGS 1 CAP (works with honda 2000 and many more replacement cap …" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-1-cap-works-with-honda-2000-and-many-more-replacement-cap-only/" target="_blank" rel="noopener">IPI BERGS 1 CAP (works with honda 2000 and many more replacement cap …</a></div>
+          <div class="node-path">/accessories/ipi-bergs-1-cap-works-with-honda-2000-and-many-more-replacement-cap-only/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-1-cap-works-with-predator-2000-part-1007-1.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-1-cap-works-with-predator-2000-part-1007-1.png" alt="IPI BERGS 1 CAP (Works With Predator 2000)Part# 1007-1" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-1-cap-works-with-predator-2000-part-1007-1/" target="_blank" rel="noopener">IPI BERGS 1 CAP (Works With Predator 2000)Part# 1007-1</a></div>
+          <div class="node-path">/accessories/ipi-bergs-1-cap-works-with-predator-2000-part-1007-1/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-tank-not-included-part-ghnd1-2sd-k.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-tank-not-included-part-ghnd1-2sd-k.png" alt="IPI BERGS Single to Dual Conversion Kit (Tank not included Part# GHND…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-single-to-dual-conversion-kit-tank-not-included-part-ghnd1-2sd-k/" target="_blank" rel="noopener">IPI BERGS Single to Dual Conversion Kit (Tank not included Part# GHND…</a></div>
+          <div class="node-path">/accessories/ipi-bergs-single-to-dual-conversion-kit-tank-not-included-part-ghnd1-2sd-k/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-without-tank-part-gryb1-2cd-k.png" target="_blank" rel="noopener"><img src="screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-without-tank-part-gryb1-2cd-k.png" alt="IPI BERGS Single to Dual Conversion Kit (without tank) Part #GRYB1.2CD-K" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/ipi-bergs-single-to-dual-conversion-kit-without-tank-part-gryb1-2cd-k/" target="_blank" rel="noopener">IPI BERGS Single to Dual Conversion Kit (without tank) Part #GRYB1.2CD-K</a></div>
+          <div class="node-path">/accessories/ipi-bergs-single-to-dual-conversion-kit-without-tank-part-gryb1-2cd-k/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-on-backorder-until-1-30-25-ipi-bergs-1-cap-fits-large-generators-part-eu7000-1.png" target="_blank" rel="noopener"><img src="screenshots/accessories-on-backorder-until-1-30-25-ipi-bergs-1-cap-fits-large-generators-part-eu7000-1.png" alt="IPI BERGS 1 Cap (fits large generators) Part # EU7000-1" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/on-backorder-until-1-30-25-ipi-bergs-1-cap-fits-large-generators-part-eu7000-1/" target="_blank" rel="noopener">IPI BERGS 1 Cap (fits large generators) Part # EU7000-1</a></div>
+          <div class="node-path">/accessories/on-backorder-until-1-30-25-ipi-bergs-1-cap-fits-large-generators-part-eu7000-1/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/accessories-t-fitting-for-gastank.png" target="_blank" rel="noopener"><img src="screenshots/accessories-t-fitting-for-gastank.png" alt="T Fitting for Gastank" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/accessories/t-fitting-for-gastank/" target="_blank" rel="noopener">T Fitting for Gastank</a></div>
+          <div class="node-path">/accessories/t-fitting-for-gastank/</div>
+          
+        </div>
+      </div>
+        </div></li>
+      <li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/videos.png" target="_blank" rel="noopener"><img src="screenshots/videos.png" alt="Videos" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/videos/" target="_blank" rel="noopener">Videos</a></div>
+          <div class="node-path">/videos/</div>
+          <div class="node-note">Product / how-to videos</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/about-us.png" target="_blank" rel="noopener"><img src="screenshots/about-us.png" alt="About Us" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/about-us/" target="_blank" rel="noopener">About Us</a></div>
+          <div class="node-path">/about-us/</div>
+          <div class="node-note">Company story</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/f-a-q.png" target="_blank" rel="noopener"><img src="screenshots/f-a-q.png" alt="F.A.Q." loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/f-a-q/" target="_blank" rel="noopener">F.A.Q.</a></div>
+          <div class="node-path">/f-a-q/</div>
+          <div class="node-note">Frequently asked questions</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/contact-us.png" target="_blank" rel="noopener"><img src="screenshots/contact-us.png" alt="Contact Us" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/contact-us/" target="_blank" rel="noopener">Contact Us</a></div>
+          <div class="node-path">/contact-us/</div>
+          <div class="node-note">Contact form + phone</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/warranty.png" target="_blank" rel="noopener"><img src="screenshots/warranty.png" alt="Warranty" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/warranty/" target="_blank" rel="noopener">Warranty</a></div>
+          <div class="node-path">/warranty/</div>
+          <div class="node-note">Warranty policy</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/shipping-returns.png" target="_blank" rel="noopener"><img src="screenshots/shipping-returns.png" alt="Shipping &amp; Returns" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/shipping-returns/" target="_blank" rel="noopener">Shipping &amp; Returns</a></div>
+          <div class="node-path">/shipping-returns/</div>
+          <div class="node-note">Shipping &amp; returns policy</div>
+        </div>
+      </div></li>
+      <li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/brands.png" target="_blank" rel="noopener"><img src="screenshots/brands.png" alt="All Brands" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/brands/" target="_blank" rel="noopener">All Brands</a><span class="badge">3</span></div>
+          <div class="node-path">/brands/</div>
+          
+        </div>
+      </div>
+        <div class="stack">
+          <div class="group-label">Brand pages</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/brands-ipi-industries.png" target="_blank" rel="noopener"><img src="screenshots/brands-ipi-industries.png" alt="IPI Industries" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/brands/IPI-Industries.html" target="_blank" rel="noopener">IPI Industries</a></div>
+          <div class="node-path">/brands/IPI-Industries.html</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/brands-attwood.png" target="_blank" rel="noopener"><img src="screenshots/brands-attwood.png" alt="Attwood" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/brands/Attwood.html" target="_blank" rel="noopener">Attwood</a></div>
+          <div class="node-path">/brands/Attwood.html</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/brands-generac.png" target="_blank" rel="noopener"><img src="screenshots/brands-generac.png" alt="Generac (brand)" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/brands/Generac.html" target="_blank" rel="noopener">Generac (brand)</a></div>
+          <div class="node-path">/brands/Generac.html</div>
+          
+        </div>
+      </div>
+        </div></li>
+      <li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/blog.png" target="_blank" rel="noopener"><img src="screenshots/blog.png" alt="Blog" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/" target="_blank" rel="noopener">Blog</a><span class="badge">19</span></div>
+          <div class="node-path">/blog/</div>
+          <div class="node-note">News &amp; articles index</div>
+        </div>
+      </div>
+        <div class="stack">
+          <div class="group-label">Articles</div>
+          
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-adding-our-accessories-for-ipi-industries-bergs-extended-run-generator-systems-to-the-site.png" target="_blank" rel="noopener"><img src="screenshots/blog-adding-our-accessories-for-ipi-industries-bergs-extended-run-generator-systems-to-the-site.png" alt="Adding our Accessories for IPI Industries BERGS Extended Run Generato…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/adding-our-accessories-for-ipi-industries-bergs-extended-run-generator-systems-to-the-site/" target="_blank" rel="noopener">Adding our Accessories for IPI Industries BERGS Extended Run Generato…</a></div>
+          <div class="node-path">/blog/adding-our-accessories-for-ipi-industries-bergs-extended-run-generator-systems-to-the-site/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-best-portable-generator-fuel-tank-extensions-for-offgrid-use.png" target="_blank" rel="noopener"><img src="screenshots/blog-best-portable-generator-fuel-tank-extensions-for-offgrid-use.png" alt="Best Portable Generator Fuel Tank Extensions for Off-Grid Use" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/best-portable-generator-fuel-tank-extensions-for-offgrid-use/" target="_blank" rel="noopener">Best Portable Generator Fuel Tank Extensions for Off-Grid Use</a></div>
+          <div class="node-path">/blog/best-portable-generator-fuel-tank-extensions-for-offgrid-use/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-breeze-extended-run-generator-systems-are-now-complete.png" target="_blank" rel="noopener"><img src="screenshots/blog-breeze-extended-run-generator-systems-are-now-complete.png" alt="Breeze Extended Run Generator Systems are now complete!" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/breeze-extended-run-generator-systems-are-now-complete/" target="_blank" rel="noopener">Breeze Extended Run Generator Systems are now complete!</a></div>
+          <div class="node-path">/blog/breeze-extended-run-generator-systems-are-now-complete/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-choosing-the-best-generator-accessories-to-boost-performance-and-durability.png" target="_blank" rel="noopener"><img src="screenshots/blog-choosing-the-best-generator-accessories-to-boost-performance-and-durability.png" alt="Choosing the Best Generator Accessories to Boost Performance and Dura…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/choosing-the-best-generator-accessories-to-boost-performance-and-durability/" target="_blank" rel="noopener">Choosing the Best Generator Accessories to Boost Performance and Dura…</a></div>
+          <div class="node-path">/blog/choosing-the-best-generator-accessories-to-boost-performance-and-durability/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-extended-run-fuel-tank-for-ryobi-ryi2200-portable-generator-from-ipi-industries.png" target="_blank" rel="noopener"><img src="screenshots/blog-extended-run-fuel-tank-for-ryobi-ryi2200-portable-generator-from-ipi-industries.png" alt="Extended Run Fuel Tank for Ryobi RYi2200 Portable Generator from IPI …" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/extended-run-fuel-tank-for-ryobi-ryi2200-portable-generator-from-ipi-industries/" target="_blank" rel="noopener">Extended Run Fuel Tank for Ryobi RYi2200 Portable Generator from IPI …</a></div>
+          <div class="node-path">/blog/extended-run-fuel-tank-for-ryobi-ryi2200-portable-generator-from-ipi-industries/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-extended-run-generator-systems-from-genxdirect-and-powerfordayscom-are-now-social.png" target="_blank" rel="noopener"><img src="screenshots/blog-extended-run-generator-systems-from-genxdirect-and-powerfordayscom-are-now-social.png" alt="Extended Run Generator Systems from GenXDirect and PowerForDays.com a…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/extended-run-generator-systems-from-genxdirect-and-powerfordayscom-are-now-social/" target="_blank" rel="noopener">Extended Run Generator Systems from GenXDirect and PowerForDays.com a…</a></div>
+          <div class="node-path">/blog/extended-run-generator-systems-from-genxdirect-and-powerfordayscom-are-now-social/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-genxdirect-and-powerfordayscom-are-adding-products-every-day.png" target="_blank" rel="noopener"><img src="screenshots/blog-genxdirect-and-powerfordayscom-are-adding-products-every-day.png" alt="GenXDirect and PowerForDays.com are adding products every day!" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/genxdirect-and-powerfordayscom-are-adding-products-every-day/" target="_blank" rel="noopener">GenXDirect and PowerForDays.com are adding products every day!</a></div>
+          <div class="node-path">/blog/genxdirect-and-powerfordayscom-are-adding-products-every-day/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-honda-pump-extended-run-fuel-tank-systems-ready-for-hurricane-season.png" target="_blank" rel="noopener"><img src="screenshots/blog-honda-pump-extended-run-fuel-tank-systems-ready-for-hurricane-season.png" alt="Honda Pump Extended Run Fuel Tank Systems Ready for Hurricane Season" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/honda-pump-extended-run-fuel-tank-systems-ready-for-hurricane-season/" target="_blank" rel="noopener">Honda Pump Extended Run Fuel Tank Systems Ready for Hurricane Season</a></div>
+          <div class="node-path">/blog/honda-pump-extended-run-fuel-tank-systems-ready-for-hurricane-season/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-honda-yamaha-and-ryobi-generators-are-big-sellers-during-the-holidays.png" target="_blank" rel="noopener"><img src="screenshots/blog-honda-yamaha-and-ryobi-generators-are-big-sellers-during-the-holidays.png" alt="Honda, Yamaha, and Ryobi Generators are BIG sellers during the Holidays!" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/honda-yamaha-and-ryobi-generators-are-big-sellers-during-the-holidays/" target="_blank" rel="noopener">Honda, Yamaha, and Ryobi Generators are BIG sellers during the Holidays!</a></div>
+          <div class="node-path">/blog/honda-yamaha-and-ryobi-generators-are-big-sellers-during-the-holidays/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-how-generator-fuel-tank-extensions-enhance-your-generators-run-time.png" target="_blank" rel="noopener"><img src="screenshots/blog-how-generator-fuel-tank-extensions-enhance-your-generators-run-time.png" alt="How Generator Fuel Tank Extensions Enhance Your Generator’s Run Time" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/how-generator-fuel-tank-extensions-enhance-your-generators-run-time/" target="_blank" rel="noopener">How Generator Fuel Tank Extensions Enhance Your Generator’s Run Time</a></div>
+          <div class="node-path">/blog/how-generator-fuel-tank-extensions-enhance-your-generators-run-time/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-how-generator-gas-tank-extenders-improve-your-fuel-efficiency.png" target="_blank" rel="noopener"><img src="screenshots/blog-how-generator-gas-tank-extenders-improve-your-fuel-efficiency.png" alt="How Generator Gas Tank Extenders Improve Your Fuel Efficiency" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/how-generator-gas-tank-extenders-improve-your-fuel-efficiency/" target="_blank" rel="noopener">How Generator Gas Tank Extenders Improve Your Fuel Efficiency</a></div>
+          <div class="node-path">/blog/how-generator-gas-tank-extenders-improve-your-fuel-efficiency/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-ipi-industries-extended-run-fuel-tank-photo-shoot.png" target="_blank" rel="noopener"><img src="screenshots/blog-ipi-industries-extended-run-fuel-tank-photo-shoot.png" alt="IPI Industries Extended Run Fuel Tank Photo Shoot..." loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/ipi-industries-extended-run-fuel-tank-photo-shoot/" target="_blank" rel="noopener">IPI Industries Extended Run Fuel Tank Photo Shoot...</a></div>
+          <div class="node-path">/blog/ipi-industries-extended-run-fuel-tank-photo-shoot/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-ipi-industries-new-trash-pump-technology.png" target="_blank" rel="noopener"><img src="screenshots/blog-ipi-industries-new-trash-pump-technology.png" alt="IPI Industries new Trash Pump technology!" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/ipi-industries-new-trash-pump-technology/" target="_blank" rel="noopener">IPI Industries new Trash Pump technology!</a></div>
+          <div class="node-path">/blog/ipi-industries-new-trash-pump-technology/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-maximizing-generator-efficiency-how-fuel-tank-extenders-save-you-time-and-money.png" target="_blank" rel="noopener"><img src="screenshots/blog-maximizing-generator-efficiency-how-fuel-tank-extenders-save-you-time-and-money.png" alt="Maximizing Generator Efficiency How Fuel Tank Extenders Save You Time…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/maximizing-generator-efficiency-how-fuel-tank-extenders-save-you-time-and-money/" target="_blank" rel="noopener">Maximizing Generator Efficiency How Fuel Tank Extenders Save You Time…</a></div>
+          <div class="node-path">/blog/maximizing-generator-efficiency-how-fuel-tank-extenders-save-you-time-and-money/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-new-shipping-options-coming-soon.png" target="_blank" rel="noopener"><img src="screenshots/blog-new-shipping-options-coming-soon.png" alt="New Shipping Options Coming Soon" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/new-shipping-options-coming-soon/" target="_blank" rel="noopener">New Shipping Options Coming Soon</a></div>
+          <div class="node-path">/blog/new-shipping-options-coming-soon/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-polaris-and-champion-portable-generators-being-added-to-the-lineup-at-ipi-industries.png" target="_blank" rel="noopener"><img src="screenshots/blog-polaris-and-champion-portable-generators-being-added-to-the-lineup-at-ipi-industries.png" alt="Polaris And Champion Portable Generators Being Added To The Lineup At…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/polaris-and-champion-portable-generators-being-added-to-the-lineup-at-ipi-industries/" target="_blank" rel="noopener">Polaris And Champion Portable Generators Being Added To The Lineup At…</a></div>
+          <div class="node-path">/blog/polaris-and-champion-portable-generators-being-added-to-the-lineup-at-ipi-industries/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-ryobi-ryi2200-generator--ryi2200-generator-is-compatible-with-multiple-ipi-industries-systems-sold-on-genxdirectcom.png" target="_blank" rel="noopener"><img src="screenshots/blog-ryobi-ryi2200-generator--ryi2200-generator-is-compatible-with-multiple-ipi-industries-systems-sold-on-genxdirectcom.png" alt="Ryobi ryi2200 Generator Is Compatible With Multiple IPI Industries Sy…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/ryobi-ryi2200-generator-is-compatible-with-multiple-ipi-industries-systems-sold-on-genxdirectcom-/" target="_blank" rel="noopener">Ryobi ryi2200 Generator Is Compatible With Multiple IPI Industries Sy…</a></div>
+          <div class="node-path">/blog/ryobi-ryi2200-generator-is-compatible-with-multiple-ipi-industries-systems-sold-on-genxdirectcom-/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-spring-is-almost-here-and-its-time-to-get-your-generator-tunedup.png" target="_blank" rel="noopener"><img src="screenshots/blog-spring-is-almost-here-and-its-time-to-get-your-generator-tunedup.png" alt="Spring Is Almost Here And Its Time To Get Your Generator Tunedup" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/spring-is-almost-here-and-its-time-to-get-your-generator-tunedup/" target="_blank" rel="noopener">Spring Is Almost Here And Its Time To Get Your Generator Tunedup</a></div>
+          <div class="node-path">/blog/spring-is-almost-here-and-its-time-to-get-your-generator-tunedup/</div>
+          
+        </div>
+      </div>
+
+      <div class="node">
+        <a class="thumb" href="screenshots/blog-the-product-review-for-ipi-industries-extended-run-generator-fuel-tanks-speak-for-themselves.png" target="_blank" rel="noopener"><img src="screenshots/blog-the-product-review-for-ipi-industries-extended-run-generator-fuel-tanks-speak-for-themselves.png" alt="The Product Review For IPI Industries Extended Run Generator Fuel Tan…" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/blog/the-product-review-for-ipi-industries-extended-run-generator-fuel-tanks-speak-for-themselves/" target="_blank" rel="noopener">The Product Review For IPI Industries Extended Run Generator Fuel Tan…</a></div>
+          <div class="node-path">/blog/the-product-review-for-ipi-industries-extended-run-generator-fuel-tanks-speak-for-themselves/</div>
+          
+        </div>
+      </div>
+        </div></li>
+      <li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/cart.png" target="_blank" rel="noopener"><img src="screenshots/cart.png" alt="Cart" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/cart.php" target="_blank" rel="noopener">Cart</a></div>
+          <div class="node-path">/cart.php</div>
+          <div class="node-note">BigCommerce cart</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/login.png" target="_blank" rel="noopener"><img src="screenshots/login.png" alt="Sign In" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/login.php" target="_blank" rel="noopener">Sign In</a></div>
+          <div class="node-path">/login.php</div>
+          <div class="node-note">Account login / register</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/sitemap.png" target="_blank" rel="noopener"><img src="screenshots/sitemap.png" alt="HTML Sitemap" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/sitemap.php" target="_blank" rel="noopener">HTML Sitemap</a></div>
+          <div class="node-path">/sitemap.php</div>
+          <div class="node-note">BigCommerce auto sitemap</div>
+        </div>
+      </div></li>
+<li><div class="drop"></div>
+      <div class="node">
+        <a class="thumb" href="screenshots/giftcertificates.png" target="_blank" rel="noopener"><img src="screenshots/giftcertificates.png" alt="Gift Certificates" loading="lazy"></a>
+        <div class="node-info">
+          <div class="node-title"><a href="https://www.genxdirect.com/giftcertificates.php" target="_blank" rel="noopener">Gift Certificates</a></div>
+          <div class="node-path">/giftcertificates.php</div>
+          <div class="node-note">Linked from header</div>
+        </div>
+      </div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="notes">
+  <h2>Crawl notes</h2>
+  <ul>
+    <li>Platform is BigCommerce (Stencil). XML sitemap index exposes pages, products, categories, brands, and news.</li>
+    <li>Primary Shop nav points to <code>/generator-brands/</code>; Accessories points to <code>/accessories-3/</code>.</li>
+    <li>Several duplicate category URLs exist (e.g. <code>/honda-eu1000/</code> vs <code>/honda-eu1000-1/</code>, same pattern for Kipor models) — worth consolidating with redirects.</li>
+    <li>Ryobi 2300 Bluetooth still uses the placeholder slug <code>/new-category/</code>.</li>
+    <li>Footer links to <code>/champion/</code>, <code>/powerhorse/</code>, and <code>/westinghouse/</code> return 404; related model categories (e.g. Champion 3100, Powerhorse 2000, W2000i) do resolve.</li>
+    <li>Product catalog mixes three URL trees: <code>/generator-brands/…</code>, <code>/b-e-r-g-s/…</code>, and <code>/accessories/…</code>.</li>
+    <li>Blog lives at <code>/blog/</code> (19 posts in the news sitemap) but is not in the main header nav.</li>
+  </ul>
+</div>
+
+</body>
+</html>
