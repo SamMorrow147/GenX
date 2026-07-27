@@ -51,7 +51,7 @@ function normalizePath(p) {
 
 function nodeCard(page, { badge, root } = {}) {
   if (!page) return `<div class="node missing"><div class="node-info"><div class="node-title">Missing page</div></div></div>`;
-  const img = `/${(page.screenshot || `screenshots/${page.slug}.png`).replace(/^\//, "")}`;
+  const img = `/${(page.screenshot || `screenshots/${page.slug}.webp`).replace(/^\//, "")}`;
   const title = page.title || page.path;
   const note = page.note || (page.status && page.status >= 400 ? `HTTP ${page.status}` : "");
   const cls = root ? "node root-node" : "node";
@@ -145,7 +145,7 @@ async function main() {
       );
       more.forEach((p) => claimedProductUrls.add(p.url));
       const allChildProds = [...childProducts, ...more.filter((p) => !childProducts.includes(p))];
-      modelBlocks.push(nodeCard(childPage || { url: SITE + child.path, path: child.path, title: child.title, note: child.note, screenshot: `screenshots/${child.path.replace(/^\/|\/$/g, "").replace(/\//g, "-")}.png`, slug: child.path.replace(/^\/|\/$/g, "") }));
+      modelBlocks.push(nodeCard(childPage || { url: SITE + child.path, path: child.path, title: child.title, note: child.note, screenshot: `screenshots/${child.path.replace(/^\/|\/$/g, "").replace(/\//g, "-")}.webp`, slug: child.path.replace(/^\/|\/$/g, "") }));
       if (allChildProds.length) {
         modelBlocks.push(`<div class="group-label">Products · ${esc(child.title)}</div>`);
         for (const pr of allChildProds) modelBlocks.push(nodeCard(pr));
@@ -497,7 +497,7 @@ async function main() {
       ${contentBranches.join("\n")}
       ${branch(brandsInner)}
       ${branch(blogInner)}
-      ${utilPages.map((p) => branch(nodeCard(typeof p.url === "string" && p.screenshot ? p : get(p.path) || { ...p, screenshot: `screenshots/${(p.path || "").replace(/^\/|\/$/g, "").replace(/[^a-z0-9]+/gi, "-")}.png` }))).join("\n")}
+      ${utilPages.map((p) => branch(nodeCard(typeof p.url === "string" && p.screenshot ? p : get(p.path) || { ...p, screenshot: `screenshots/${(p.path || "").replace(/^\/|\/$/g, "").replace(/[^a-z0-9]+/gi, "-")}.webp` }))).join("\n")}
     </ul>
   </div>
 </div>

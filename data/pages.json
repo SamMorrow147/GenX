@@ -21,7 +21,7 @@
       "note": "Hero carousel, most popular products, brands",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/home.png",
+      "screenshot": "screenshots/home.webp",
       "skipped": true
     },
     {
@@ -33,7 +33,7 @@
       "note": "Company story",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/about-us.png",
+      "screenshot": "screenshots/about-us.webp",
       "skipped": true
     },
     {
@@ -45,7 +45,7 @@
       "note": "Accessories category",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-3.png",
+      "screenshot": "screenshots/accessories-3.webp",
       "skipped": true
     },
     {
@@ -57,7 +57,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-6-gallon-marine-attwood-tank-part-8806lp2-1b.png",
+      "screenshot": "screenshots/accessories-6-gallon-marine-attwood-tank-part-8806lp2-1b.webp",
       "skipped": true
     },
     {
@@ -69,7 +69,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-b-e-r-g-s-single-to-dual-conversion-kit-from-ipi-industries.png",
+      "screenshot": "screenshots/accessories-b-e-r-g-s-single-to-dual-conversion-kit-from-ipi-industries.webp",
       "skipped": true
     },
     {
@@ -81,7 +81,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-bergs-i-and-ii-replacement-gasket-for-yamaha-set-ipi-73257ym.png",
+      "screenshot": "screenshots/accessories-bergs-i-and-ii-replacement-gasket-for-yamaha-set-ipi-73257ym.webp",
       "skipped": true
     },
     {
@@ -93,7 +93,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-briggs-and-stratton-berg-1-cap-part-bs-p2200.png",
+      "screenshot": "screenshots/accessories-briggs-and-stratton-berg-1-cap-part-bs-p2200.webp",
       "skipped": true
     },
     {
@@ -105,7 +105,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-complete-hose-assembly-for-ipi-industries-b-e-r-g-s.png",
+      "screenshot": "screenshots/accessories-complete-hose-assembly-for-ipi-industries-b-e-r-g-s.webp",
       "skipped": true
     },
     {
@@ -117,7 +117,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-honda-gasket-replacement-set-5-pack-ipi-73257.png",
+      "screenshot": "screenshots/accessories-honda-gasket-replacement-set-5-pack-ipi-73257.webp",
       "skipped": true
     },
     {
@@ -129,7 +129,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-ipi-bergs-1--cap-replacement-blue-cap-works-with-yamaha-powerhorse-westinghouse-part-1003-1.png",
+      "screenshot": "screenshots/accessories-ipi-bergs-1--cap-replacement-blue-cap-works-with-yamaha-powerhorse-westinghouse-part-1003-1.webp",
       "skipped": false
     },
     {
@@ -141,7 +141,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1.png",
+      "screenshot": "screenshots/accessories-ipi-bergs-1-cap-replacment-cap-works-with-generac-iq2000-part-giq-2000-1.webp",
       "skipped": true
     },
     {
@@ -153,7 +153,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-ipi-bergs-1-cap-works-with-honda-2000-and-many-more-replacement-cap-only.png",
+      "screenshot": "screenshots/accessories-ipi-bergs-1-cap-works-with-honda-2000-and-many-more-replacement-cap-only.webp",
       "skipped": true
     },
     {
@@ -165,7 +165,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-ipi-bergs-1-cap-works-with-predator-2000-part-1007-1.png",
+      "screenshot": "screenshots/accessories-ipi-bergs-1-cap-works-with-predator-2000-part-1007-1.webp",
       "skipped": true
     },
     {
@@ -177,7 +177,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-tank-not-included-part-ghnd1-2sd-k.png",
+      "screenshot": "screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-tank-not-included-part-ghnd1-2sd-k.webp",
       "skipped": true
     },
     {
@@ -189,7 +189,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-without-tank-part-gryb1-2cd-k.png",
+      "screenshot": "screenshots/accessories-ipi-bergs-single-to-dual-conversion-kit-without-tank-part-gryb1-2cd-k.webp",
       "skipped": true
     },
     {
@@ -201,7 +201,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-on-backorder-until-1-30-25-ipi-bergs-1-cap-fits-large-generators-part-eu7000-1.png",
+      "screenshot": "screenshots/accessories-on-backorder-until-1-30-25-ipi-bergs-1-cap-fits-large-generators-part-eu7000-1.webp",
       "skipped": true
     },
     {
@@ -213,7 +213,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/accessories-t-fitting-for-gastank.png",
+      "screenshot": "screenshots/accessories-t-fitting-for-gastank.webp",
       "skipped": true
     },
     {
@@ -225,7 +225,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g--system-with-6-gallon-fuel-tank-ipi-industries-berg-system-ymh1-2000is.png",
+      "screenshot": "screenshots/b-e-r-g--system-with-6-gallon-fuel-tank-ipi-industries-berg-system-ymh1-2000is.webp",
       "skipped": false
     },
     {
@@ -237,7 +237,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-2000is.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-2000is.webp",
       "skipped": true
     },
     {
@@ -249,7 +249,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ghnd1-2cs.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ghnd1-2cs.webp",
       "skipped": true
     },
     {
@@ -261,7 +261,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ymh1-2cs.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-tank-not-included-part-ymh1-2cs.webp",
       "skipped": true
     },
     {
@@ -273,7 +273,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-gnc-2000-s.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-gnc-2000-s.webp",
       "skipped": true
     },
     {
@@ -285,7 +285,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-ryb1-2200s.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-with-tank-part-ryb1-2200s.webp",
       "skipped": true
     },
     {
@@ -297,7 +297,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gen1-2cs.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gen1-2cs.webp",
       "skipped": true
     },
     {
@@ -309,7 +309,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gryb1-2cs.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-1-extended-run-fuel-system-without-tank-part-gryb1-2cs.webp",
       "skipped": true
     },
     {
@@ -321,7 +321,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g--dual-generator-extended-run-fuel-system-part-tank-not-included-ghnd1-2cd.png",
+      "screenshot": "screenshots/b-e-r-g--dual-generator-extended-run-fuel-system-part-tank-not-included-ghnd1-2cd.webp",
       "skipped": false
     },
     {
@@ -333,7 +333,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-dual-generator-extended-run-fuel-system-tank-included.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-dual-generator-extended-run-fuel-system-tank-included.webp",
       "skipped": true
     },
     {
@@ -345,7 +345,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-extended-run-fuel-system-for-dual-generators-with-tank-part-ryb1-2200d.png",
+      "screenshot": "screenshots/b-e-r-g-s-bergs-i-ipi-bergs-2-extended-run-fuel-system-for-dual-generators-with-tank-part-ryb1-2200d.webp",
       "skipped": false
     },
     {
@@ -357,7 +357,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g--extend-run-fuel-system-for-dual-generators-without-tank-part-gryb1-2cd.png",
+      "screenshot": "screenshots/b-e-r-g--extend-run-fuel-system-for-dual-generators-without-tank-part-gryb1-2cd.webp",
       "skipped": false
     },
     {
@@ -369,7 +369,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-included-out-of-stock-until-june-23-2025.png",
+      "screenshot": "screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-included-out-of-stock-until-june-23-2025.webp",
       "skipped": false
     },
     {
@@ -381,7 +381,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-not-included-out-of-stock-until-june-23-2025.png",
+      "screenshot": "screenshots/b-e-r-g-s-ipi-bergs-1-extended-run-fuel-system-tank-not-included-out-of-stock-until-june-23-2025.webp",
       "skipped": false
     },
     {
@@ -393,7 +393,7 @@
       "note": "News & articles index",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog.png",
+      "screenshot": "screenshots/blog.webp",
       "skipped": true
     },
     {
@@ -405,7 +405,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-adding-our-accessories-for-ipi-industries-bergs-extended-run-generator-systems-to-the-site.png",
+      "screenshot": "screenshots/blog-adding-our-accessories-for-ipi-industries-bergs-extended-run-generator-systems-to-the-site.webp",
       "skipped": false
     },
     {
@@ -417,7 +417,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-best-portable-generator-fuel-tank-extensions-for-offgrid-use.png",
+      "screenshot": "screenshots/blog-best-portable-generator-fuel-tank-extensions-for-offgrid-use.webp",
       "skipped": true
     },
     {
@@ -429,7 +429,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-breeze-extended-run-generator-systems-are-now-complete.png",
+      "screenshot": "screenshots/blog-breeze-extended-run-generator-systems-are-now-complete.webp",
       "skipped": true
     },
     {
@@ -441,7 +441,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-choosing-the-best-generator-accessories-to-boost-performance-and-durability.png",
+      "screenshot": "screenshots/blog-choosing-the-best-generator-accessories-to-boost-performance-and-durability.webp",
       "skipped": true
     },
     {
@@ -453,7 +453,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-extended-run-fuel-tank-for-ryobi-ryi2200-portable-generator-from-ipi-industries.png",
+      "screenshot": "screenshots/blog-extended-run-fuel-tank-for-ryobi-ryi2200-portable-generator-from-ipi-industries.webp",
       "skipped": true
     },
     {
@@ -465,7 +465,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-extended-run-generator-systems-from-genxdirect-and-powerfordayscom-are-now-social.png",
+      "screenshot": "screenshots/blog-extended-run-generator-systems-from-genxdirect-and-powerfordayscom-are-now-social.webp",
       "skipped": true
     },
     {
@@ -477,7 +477,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-genxdirect-and-powerfordayscom-are-adding-products-every-day.png",
+      "screenshot": "screenshots/blog-genxdirect-and-powerfordayscom-are-adding-products-every-day.webp",
       "skipped": true
     },
     {
@@ -489,7 +489,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-honda-pump-extended-run-fuel-tank-systems-ready-for-hurricane-season.png",
+      "screenshot": "screenshots/blog-honda-pump-extended-run-fuel-tank-systems-ready-for-hurricane-season.webp",
       "skipped": true
     },
     {
@@ -501,7 +501,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-honda-yamaha-and-ryobi-generators-are-big-sellers-during-the-holidays.png",
+      "screenshot": "screenshots/blog-honda-yamaha-and-ryobi-generators-are-big-sellers-during-the-holidays.webp",
       "skipped": true
     },
     {
@@ -513,7 +513,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-how-generator-fuel-tank-extensions-enhance-your-generators-run-time.png",
+      "screenshot": "screenshots/blog-how-generator-fuel-tank-extensions-enhance-your-generators-run-time.webp",
       "skipped": true
     },
     {
@@ -525,7 +525,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-how-generator-gas-tank-extenders-improve-your-fuel-efficiency.png",
+      "screenshot": "screenshots/blog-how-generator-gas-tank-extenders-improve-your-fuel-efficiency.webp",
       "skipped": true
     },
     {
@@ -537,7 +537,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-ipi-industries-extended-run-fuel-tank-photo-shoot.png",
+      "screenshot": "screenshots/blog-ipi-industries-extended-run-fuel-tank-photo-shoot.webp",
       "skipped": true
     },
     {
@@ -549,7 +549,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-ipi-industries-new-trash-pump-technology.png",
+      "screenshot": "screenshots/blog-ipi-industries-new-trash-pump-technology.webp",
       "skipped": true
     },
     {
@@ -561,7 +561,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-maximizing-generator-efficiency-how-fuel-tank-extenders-save-you-time-and-money.png",
+      "screenshot": "screenshots/blog-maximizing-generator-efficiency-how-fuel-tank-extenders-save-you-time-and-money.webp",
       "skipped": true
     },
     {
@@ -573,7 +573,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-new-shipping-options-coming-soon.png",
+      "screenshot": "screenshots/blog-new-shipping-options-coming-soon.webp",
       "skipped": true
     },
     {
@@ -585,7 +585,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-polaris-and-champion-portable-generators-being-added-to-the-lineup-at-ipi-industries.png",
+      "screenshot": "screenshots/blog-polaris-and-champion-portable-generators-being-added-to-the-lineup-at-ipi-industries.webp",
       "skipped": true
     },
     {
@@ -597,7 +597,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-ryobi-ryi2200-generator--ryi2200-generator-is-compatible-with-multiple-ipi-industries-systems-sold-on-genxdirectcom.png",
+      "screenshot": "screenshots/blog-ryobi-ryi2200-generator--ryi2200-generator-is-compatible-with-multiple-ipi-industries-systems-sold-on-genxdirectcom.webp",
       "skipped": false
     },
     {
@@ -609,7 +609,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-spring-is-almost-here-and-its-time-to-get-your-generator-tunedup.png",
+      "screenshot": "screenshots/blog-spring-is-almost-here-and-its-time-to-get-your-generator-tunedup.webp",
       "skipped": true
     },
     {
@@ -621,7 +621,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/blog-the-product-review-for-ipi-industries-extended-run-generator-fuel-tanks-speak-for-themselves.png",
+      "screenshot": "screenshots/blog-the-product-review-for-ipi-industries-extended-run-generator-fuel-tanks-speak-for-themselves.webp",
       "skipped": false
     },
     {
@@ -633,7 +633,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/brands.png",
+      "screenshot": "screenshots/brands.webp",
       "skipped": true
     },
     {
@@ -645,7 +645,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/brands-attwood.png",
+      "screenshot": "screenshots/brands-attwood.webp",
       "skipped": true
     },
     {
@@ -657,7 +657,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/brands-generac.png",
+      "screenshot": "screenshots/brands-generac.webp",
       "skipped": true
     },
     {
@@ -669,7 +669,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/brands-ipi-industries.png",
+      "screenshot": "screenshots/brands-ipi-industries.webp",
       "skipped": true
     },
     {
@@ -681,7 +681,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/briggs-stratton.png",
+      "screenshot": "screenshots/briggs-stratton.webp",
       "skipped": true
     },
     {
@@ -693,7 +693,7 @@
       "note": "BigCommerce cart",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/cart.png",
+      "screenshot": "screenshots/cart.webp",
       "skipped": true
     },
     {
@@ -705,7 +705,7 @@
       "note": "In sitemap; Champion brand page 404s",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/champion-3100-1.png",
+      "screenshot": "screenshots/champion-3100-1.webp",
       "skipped": true
     },
     {
@@ -717,7 +717,7 @@
       "note": "Contact form + phone",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/contact-us.png",
+      "screenshot": "screenshots/contact-us.webp",
       "skipped": true
     },
     {
@@ -729,7 +729,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/duromax-xp2000i-1.png",
+      "screenshot": "screenshots/duromax-xp2000i-1.webp",
       "skipped": true
     },
     {
@@ -740,7 +740,7 @@
       "title": "DuroMax XP2000i",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/duromax-xp2000i.png",
+      "screenshot": "screenshots/duromax-xp2000i.webp",
       "skipped": true
     },
     {
@@ -751,7 +751,7 @@
       "title": "EF2200iS",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/ef2200is.png",
+      "screenshot": "screenshots/ef2200is.webp",
       "skipped": true
     },
     {
@@ -762,7 +762,7 @@
       "title": "Honda EM6500SX",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/em6500sx.png",
+      "screenshot": "screenshots/em6500sx.webp",
       "skipped": true
     },
     {
@@ -774,7 +774,7 @@
       "note": "Frequently asked questions",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/f-a-q.png",
+      "screenshot": "screenshots/f-a-q.webp",
       "skipped": true
     },
     {
@@ -785,7 +785,7 @@
       "title": "Generac IQ2000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generac-iq2000.png",
+      "screenshot": "screenshots/generac-iq2000.webp",
       "skipped": true
     },
     {
@@ -797,7 +797,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generac.png",
+      "screenshot": "screenshots/generac.webp",
       "skipped": true
     },
     {
@@ -809,7 +809,7 @@
       "note": "Generator Brands hub \u2014 Shop nav target",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands.png",
+      "screenshot": "screenshots/generator-brands.webp",
       "skipped": true
     },
     {
@@ -821,7 +821,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-briggs-stratton--bergs-1-extended-run-fuel-system-tank-included-part-bs-p2200-s.png",
+      "screenshot": "screenshots/generator-brands-briggs-stratton--bergs-1-extended-run-fuel-system-tank-included-part-bs-p2200-s.webp",
       "skipped": false
     },
     {
@@ -833,7 +833,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-briggs-stratton--1-extended-run-fuel-system-tank-not-included-part-bs-p2200-cs.png",
+      "screenshot": "screenshots/generator-brands-briggs-stratton--1-extended-run-fuel-system-tank-not-included-part-bs-p2200-cs.webp",
       "skipped": false
     },
     {
@@ -845,7 +845,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-briggs-stratton--bergs-2-extended-run-fuel-system-tank-included-part-bs-p2200-d.png",
+      "screenshot": "screenshots/generator-brands-briggs-stratton--bergs-2-extended-run-fuel-system-tank-included-part-bs-p2200-d.webp",
       "skipped": false
     },
     {
@@ -857,7 +857,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-briggs-stratton--2-extended-run-fuel-system-tank-not-included-part-bs-p2200-cd.png",
+      "screenshot": "screenshots/generator-brands-briggs-stratton--2-extended-run-fuel-system-tank-not-included-part-bs-p2200-cd.webp",
       "skipped": false
     },
     {
@@ -869,7 +869,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-generac-generac--bergs-1-extended-run-fuel-system-tank-included-part-gnc-iq2000-s.png",
+      "screenshot": "screenshots/generator-brands-generac-generac--bergs-1-extended-run-fuel-system-tank-included-part-gnc-iq2000-s.webp",
       "skipped": false
     },
     {
@@ -881,7 +881,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-generac-generac--1-extended-run-fuel-system-tank-not-included-part-gnc-iq2000-cs.png",
+      "screenshot": "screenshots/generator-brands-generac-generac--1-extended-run-fuel-system-tank-not-included-part-gnc-iq2000-cs.webp",
       "skipped": false
     },
     {
@@ -893,7 +893,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-honda-honda-eb2800i-honda-eb2800-replcament-cap-cap-only.png",
+      "screenshot": "screenshots/generator-brands-honda-honda-eb2800i-honda-eb2800-replcament-cap-cap-only.webp",
       "skipped": true
     },
     {
@@ -905,7 +905,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-honda-honda--ipi-bergs-extended-run-fuel-system-for-honda-eb2800i-tank-not-included.png",
+      "screenshot": "screenshots/generator-brands-honda-honda--ipi-bergs-extended-run-fuel-system-for-honda-eb2800i-tank-not-included.webp",
       "skipped": false
     },
     {
@@ -917,7 +917,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-honda-honda--ipi-bergs-i-extended-run-fuel-system-for-honda-eb2800i-tank-included.png",
+      "screenshot": "screenshots/generator-brands-honda-honda--ipi-bergs-i-extended-run-fuel-system-for-honda-eb2800i-tank-included.webp",
       "skipped": false
     },
     {
@@ -929,7 +929,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-honda-honda--ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-7000is.png",
+      "screenshot": "screenshots/generator-brands-honda-honda--ipi-bergs-1-extended-run-fuel-system-tank-included-part-hnd1-7000is.webp",
       "skipped": false
     },
     {
@@ -941,7 +941,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-honda-honda--bergs-1-extended-run-fuel-system-tank-not-included-part-hnd1-7cs.png",
+      "screenshot": "screenshots/generator-brands-honda-honda--bergs-1-extended-run-fuel-system-tank-not-included-part-hnd1-7cs.webp",
       "skipped": false
     },
     {
@@ -953,7 +953,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-honda-honda--honda-cap-kit-3200i-ck-includes-gasket-vent-clip-and-instruction-card.png",
+      "screenshot": "screenshots/generator-brands-honda-honda--honda-cap-kit-3200i-ck-includes-gasket-vent-clip-and-instruction-card.webp",
       "skipped": false
     },
     {
@@ -965,7 +965,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-powerhorse-ipi--extended-run-generator-system-b-e-r-g-s-single-yamaha-ef1000is.png",
+      "screenshot": "screenshots/generator-brands-powerhorse-ipi--extended-run-generator-system-b-e-r-g-s-single-yamaha-ef1000is.webp",
       "skipped": false
     },
     {
@@ -977,7 +977,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-predator-ipi-bergs-extended-run-fuel-system-tank-not-included.png",
+      "screenshot": "screenshots/generator-brands-predator-ipi-bergs-extended-run-fuel-system-tank-not-included.webp",
       "skipped": true
     },
     {
@@ -989,7 +989,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-predator-predator--ipi-bergs-1-extended-run-fuel-system-tank-included-part-pred1-2000is.png",
+      "screenshot": "screenshots/generator-brands-predator-predator--ipi-bergs-1-extended-run-fuel-system-tank-included-part-pred1-2000is.webp",
       "skipped": false
     },
     {
@@ -1001,7 +1001,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-predator-predator--bergs-1-extended-run-fuel-system-tank-not-included-part-pred1-2cs.png",
+      "screenshot": "screenshots/generator-brands-predator-predator--bergs-1-extended-run-fuel-system-tank-not-included-part-pred1-2cs.webp",
       "skipped": false
     },
     {
@@ -1013,7 +1013,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-predator-predator--ipi-bergs-i-extended-run-fuel-system-tank-included-part-pred1-3500s.png",
+      "screenshot": "screenshots/generator-brands-predator-predator--ipi-bergs-i-extended-run-fuel-system-tank-included-part-pred1-3500s.webp",
       "skipped": false
     },
     {
@@ -1025,7 +1025,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-predator-predator-3500-predator-3500-replacement-cap.png",
+      "screenshot": "screenshots/generator-brands-predator-predator-3500-predator-3500-replacement-cap.webp",
       "skipped": true
     },
     {
@@ -1037,7 +1037,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-yamaha-ef2200is-yamaha-ef2200is-dual-system.png",
+      "screenshot": "screenshots/generator-brands-yamaha-ef2200is-yamaha-ef2200is-dual-system.webp",
       "skipped": true
     },
     {
@@ -1049,7 +1049,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/generator-brands-yamaha-ipi--run-generator-system-b-e-r-g-s-clam-single-yamaha-ef1000is.png",
+      "screenshot": "screenshots/generator-brands-yamaha-ipi--run-generator-system-b-e-r-g-s-clam-single-yamaha-ef1000is.webp",
       "skipped": false
     },
     {
@@ -1061,7 +1061,7 @@
       "note": "Linked from header",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/giftcertificates.png",
+      "screenshot": "screenshots/giftcertificates.webp",
       "skipped": true
     },
     {
@@ -1072,7 +1072,7 @@
       "title": "Honda EB2800i",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eb2800i.png",
+      "screenshot": "screenshots/honda-eb2800i.webp",
       "skipped": true
     },
     {
@@ -1084,7 +1084,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu1000-1.png",
+      "screenshot": "screenshots/honda-eu1000-1.webp",
       "skipped": true
     },
     {
@@ -1095,7 +1095,7 @@
       "title": "Honda EU1000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu1000.png",
+      "screenshot": "screenshots/honda-eu1000.webp",
       "skipped": true
     },
     {
@@ -1106,7 +1106,7 @@
       "title": "Honda EU2000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu2000.png",
+      "screenshot": "screenshots/honda-eu2000.webp",
       "skipped": true
     },
     {
@@ -1117,7 +1117,7 @@
       "title": "Honda EU2200i",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu2200.png",
+      "screenshot": "screenshots/honda-eu2200.webp",
       "skipped": true
     },
     {
@@ -1129,7 +1129,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu3000-1.png",
+      "screenshot": "screenshots/honda-eu3000-1.webp",
       "skipped": true
     },
     {
@@ -1140,7 +1140,7 @@
       "title": "Honda EU3000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu3000.png",
+      "screenshot": "screenshots/honda-eu3000.webp",
       "skipped": true
     },
     {
@@ -1151,7 +1151,7 @@
       "title": "Honda EU3200i",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu3200i.png",
+      "screenshot": "screenshots/honda-eu3200i.webp",
       "skipped": true
     },
     {
@@ -1162,7 +1162,7 @@
       "title": "Honda EU6500",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu6500.png",
+      "screenshot": "screenshots/honda-eu6500.webp",
       "skipped": true
     },
     {
@@ -1173,7 +1173,7 @@
       "title": "Honda EU7000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda-eu7000.png",
+      "screenshot": "screenshots/honda-eu7000.webp",
       "skipped": true
     },
     {
@@ -1185,7 +1185,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/honda.png",
+      "screenshot": "screenshots/honda.webp",
       "skipped": true
     },
     {
@@ -1196,7 +1196,7 @@
       "title": "iGen2200",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/igen2200.png",
+      "screenshot": "screenshots/igen2200.webp",
       "skipped": true
     },
     {
@@ -1208,7 +1208,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-1000-1.png",
+      "screenshot": "screenshots/kipor-1000-1.webp",
       "skipped": true
     },
     {
@@ -1219,7 +1219,7 @@
       "title": "Kipor 1000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-1000.png",
+      "screenshot": "screenshots/kipor-1000.webp",
       "skipped": true
     },
     {
@@ -1231,7 +1231,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-2000-1.png",
+      "screenshot": "screenshots/kipor-2000-1.webp",
       "skipped": true
     },
     {
@@ -1242,7 +1242,7 @@
       "title": "Kipor 2000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-2000.png",
+      "screenshot": "screenshots/kipor-2000.webp",
       "skipped": true
     },
     {
@@ -1254,7 +1254,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-2600-1.png",
+      "screenshot": "screenshots/kipor-2600-1.webp",
       "skipped": true
     },
     {
@@ -1265,7 +1265,7 @@
       "title": "Kipor 2600",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-2600.png",
+      "screenshot": "screenshots/kipor-2600.webp",
       "skipped": true
     },
     {
@@ -1277,7 +1277,7 @@
       "note": "Duplicate category URL",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-770-1.png",
+      "screenshot": "screenshots/kipor-770-1.webp",
       "skipped": true
     },
     {
@@ -1288,7 +1288,7 @@
       "title": "Kipor 770",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor-770.png",
+      "screenshot": "screenshots/kipor-770.webp",
       "skipped": true
     },
     {
@@ -1300,7 +1300,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/kipor.png",
+      "screenshot": "screenshots/kipor.webp",
       "skipped": true
     },
     {
@@ -1312,7 +1312,7 @@
       "note": "Account login / register",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/login.png",
+      "screenshot": "screenshots/login.webp",
       "skipped": true
     },
     {
@@ -1324,7 +1324,7 @@
       "note": "Slug is still /new-category/",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/new-category.png",
+      "screenshot": "screenshots/new-category.webp",
       "skipped": true
     },
     {
@@ -1335,7 +1335,7 @@
       "title": "P2200 PowerSmart Series",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/p2200-powersmart-series-inverter-generator.png",
+      "screenshot": "screenshots/p2200-powersmart-series-inverter-generator.webp",
       "skipped": true
     },
     {
@@ -1346,7 +1346,7 @@
       "title": "Powerhorse 2000 Gravity Fed",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/powerhorse-2000-gravity-fed.png",
+      "screenshot": "screenshots/powerhorse-2000-gravity-fed.webp",
       "skipped": true
     },
     {
@@ -1357,7 +1357,7 @@
       "title": "Predator 2000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/predator-2000.png",
+      "screenshot": "screenshots/predator-2000.webp",
       "skipped": true
     },
     {
@@ -1368,7 +1368,7 @@
       "title": "Predator 3500",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/predator-3500.png",
+      "screenshot": "screenshots/predator-3500.webp",
       "skipped": true
     },
     {
@@ -1380,7 +1380,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/predator.png",
+      "screenshot": "screenshots/predator.webp",
       "skipped": true
     },
     {
@@ -1391,7 +1391,7 @@
       "title": "Ryobi 2200",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/ryobi-2200.png",
+      "screenshot": "screenshots/ryobi-2200.webp",
       "skipped": true
     },
     {
@@ -1403,7 +1403,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/ryobi.png",
+      "screenshot": "screenshots/ryobi.webp",
       "skipped": true
     },
     {
@@ -1415,7 +1415,7 @@
       "note": "Shipping & returns policy",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/shipping-returns.png",
+      "screenshot": "screenshots/shipping-returns.webp",
       "skipped": true
     },
     {
@@ -1427,7 +1427,7 @@
       "note": "BigCommerce auto sitemap",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/sitemap.png",
+      "screenshot": "screenshots/sitemap.webp",
       "skipped": true
     },
     {
@@ -1439,7 +1439,7 @@
       "note": "Product / how-to videos",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/videos.png",
+      "screenshot": "screenshots/videos.webp",
       "skipped": true
     },
     {
@@ -1450,7 +1450,7 @@
       "title": "Westinghouse W2000i",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/w2000i.png",
+      "screenshot": "screenshots/w2000i.webp",
       "skipped": true
     },
     {
@@ -1462,7 +1462,7 @@
       "note": "Warranty policy",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/warranty.png",
+      "screenshot": "screenshots/warranty.webp",
       "skipped": true
     },
     {
@@ -1473,7 +1473,7 @@
       "title": "Yamaha 1000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/yamaha-1000.png",
+      "screenshot": "screenshots/yamaha-1000.webp",
       "skipped": true
     },
     {
@@ -1484,7 +1484,7 @@
       "title": "Yamaha 2000",
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/yamaha-2000.png",
+      "screenshot": "screenshots/yamaha-2000.webp",
       "skipped": true
     },
     {
@@ -1496,7 +1496,7 @@
       "note": null,
       "status": 200,
       "error": null,
-      "screenshot": "screenshots/yamaha.png",
+      "screenshot": "screenshots/yamaha.webp",
       "skipped": true
     }
   ]
