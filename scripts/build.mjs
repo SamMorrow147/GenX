@@ -51,15 +51,16 @@ function normalizePath(p) {
 
 function nodeCard(page, { badge, root } = {}) {
   if (!page) return `<div class="node missing"><div class="node-info"><div class="node-title">Missing page</div></div></div>`;
-  const img = page.screenshot || `screenshots/${page.slug}.png`;
+  const img = `/${(page.screenshot || `screenshots/${page.slug}.png`).replace(/^\//, "")}`;
   const title = page.title || page.path;
   const note = page.note || (page.status && page.status >= 400 ? `HTTP ${page.status}` : "");
   const cls = root ? "node root-node" : "node";
+  const live = page.url || "#";
   return `
       <div class="${cls}">
-        <a class="thumb" href="${esc(img)}" target="_blank" rel="noopener"><img src="${esc(img)}" alt="${esc(title)}" loading="lazy"></a>
+        <a class="thumb" href="${esc(live)}" target="_blank" rel="noopener"><img src="${esc(img)}" alt="${esc(title)}" loading="lazy"></a>
         <div class="node-info">
-          <div class="node-title"><a href="${esc(page.url)}" target="_blank" rel="noopener">${esc(title)}</a>${badge ? `<span class="badge">${esc(badge)}</span>` : ""}</div>
+          <div class="node-title"><a href="${esc(live)}" target="_blank" rel="noopener">${esc(title)}</a>${badge ? `<span class="badge">${esc(badge)}</span>` : ""}</div>
           <div class="node-path">${esc(page.path)}</div>
           ${note ? `<div class="node-note">${esc(note)}</div>` : ""}
         </div>
@@ -472,7 +473,7 @@ async function main() {
     <div class="title-block">
       <h1>Visual Sitemap</h1>
       <a href="${SITE}/" target="_blank" rel="noopener">genxdirect.com</a>
-      <div class="meta">BigCommerce &middot; crawled &amp; captured ${CAPTURED} &middot; click a thumbnail for the full screenshot, a title for the live page</div>
+      <div class="meta">BigCommerce &middot; crawled &amp; captured ${CAPTURED} &middot; click any card to open the live page</div>
     </div>
     <div class="stats">
       <div class="stat"><div class="num">${counts.total}</div><div class="lbl">Total URLs</div></div>
@@ -518,8 +519,8 @@ async function main() {
 </html>
 `;
 
-  await writeFile(path.join(ROOT, "index.html"), html);
-  console.log("Wrote index.html");
+  await writeFile(path.join(ROOT, "public", "index.html"), html);
+  console.log("Wrote public/index.html");
   console.log("Stats:", counts);
   console.log("Claimed products:", claimedProductUrls.size, "/", products.length);
   console.log("Leftover non-accessory:", leftover.length);

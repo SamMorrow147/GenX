@@ -17,7 +17,7 @@ import {
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
-const OUT_DIR = path.join(ROOT, "screenshots");
+const OUT_DIR = path.join(ROOT, "public", "screenshots");
 const META_PATH = path.join(ROOT, "data", "pages.json");
 
 const VIEWPORT = { width: 1440, height: 900 };
